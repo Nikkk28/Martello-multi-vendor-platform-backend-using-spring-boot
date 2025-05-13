@@ -1,5 +1,6 @@
 package com.martello.ecommerce.config;
 
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +17,7 @@ public class FileStorageConfig implements WebMvcConfigurer {
     @Value("${file.upload-dir:uploads}")
     private String uploadDir;
 
-    @Bean
+    @PostConstruct
     public void createUploadDirectoryIfNotExists() {
         File directory = new File(uploadDir);
         if (!directory.exists()) {
