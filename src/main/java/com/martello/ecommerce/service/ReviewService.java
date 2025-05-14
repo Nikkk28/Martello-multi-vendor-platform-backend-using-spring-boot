@@ -8,6 +8,7 @@ import com.martello.ecommerce.model.entity.Order;
 import com.martello.ecommerce.model.entity.Product;
 import com.martello.ecommerce.model.entity.Review;
 import com.martello.ecommerce.model.entity.User;
+import com.martello.ecommerce.model.enums.Role;
 import com.martello.ecommerce.repository.OrderRepository;
 import com.martello.ecommerce.repository.ProductRepository;
 import com.martello.ecommerce.repository.ReviewRepository;
@@ -26,6 +27,7 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final ProductRepository productRepository;
     private final OrderRepository orderRepository;
+    private final NotificationService notificationService;
 
     @Transactional(readOnly = true)
     public Page<ReviewResponse> getProductReviews(Long productId, Pageable pageable) {
@@ -146,7 +148,4 @@ public class ReviewService {
                 .updatedAt(review.getUpdatedAt())
                 .build();
     }
-
-    private final NotificationService notificationService;
-    private final Role Role;
 }
