@@ -30,11 +30,6 @@ public class AddressRequest {
     @NotBlank(message = "Country is required")
     private String country;
     
-    @NotBlank(message = "Phone number is required")
-    private String phoneNumber;
-    
-    private String fullName;
-    
     @NotNull(message = "Is default flag is required")
     private Boolean isDefault;
     

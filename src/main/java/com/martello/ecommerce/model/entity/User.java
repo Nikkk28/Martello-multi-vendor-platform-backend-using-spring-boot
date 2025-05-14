@@ -2,6 +2,7 @@ package com.martello.ecommerce.model.entity;
 
 import com.martello.ecommerce.model.enums.Role;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,6 +15,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -38,6 +40,13 @@ public class User implements UserDetails {
 
     @Column(nullable = false)
     private String firstName;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Address> addresses = new ArrayList<>();
+
+    @Column(nullable = false)
+    @Pattern(regexp = "^\\d{10}$")
+    private String phoneNumber;
 
     @Column(nullable = false)
     private String lastName;
