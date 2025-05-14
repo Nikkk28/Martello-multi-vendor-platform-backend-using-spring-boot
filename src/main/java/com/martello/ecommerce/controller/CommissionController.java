@@ -19,7 +19,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/v1")
 @RequiredArgsConstructor
 public class CommissionController {
 
