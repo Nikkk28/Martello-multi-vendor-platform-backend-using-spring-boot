@@ -12,7 +12,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/v1/cart")
+@RequestMapping("/cart")
 @RequiredArgsConstructor
 public class CartController {
 

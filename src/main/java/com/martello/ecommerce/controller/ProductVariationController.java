@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/v1/products/{productId}/variations")
+@RequestMapping("/products/{productId}/variations")
 @RequiredArgsConstructor
 public class ProductVariationController {
 
