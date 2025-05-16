@@ -38,4 +38,6 @@ public class AddressRequest {
     
     @NotNull(message = "Is billing address flag is required")
     private Boolean isBillingAddress;
+
+    private UserDto user;
 }

@@ -46,8 +46,6 @@ public class AddressService {
                 .state(request.getState())
                 .postalCode(request.getPostalCode())
                 .country(request.getCountry())
-                .phoneNumber(request.getPhoneNumber())
-                .fullName(request.getFullName())
                 .isShippingAddress(request.getIsShippingAddress())
                 .isBillingAddress(request.getIsBillingAddress())
                 .isDefault(request.getIsDefault())
@@ -77,8 +75,6 @@ public class AddressService {
         address.setState(request.getState());
         address.setPostalCode(request.getPostalCode());
         address.setCountry(request.getCountry());
-        address.setPhoneNumber(request.getPhoneNumber());
-        address.setFullName(request.getFullName());
         address.setIsShippingAddress(request.getIsShippingAddress());
         address.setIsBillingAddress(request.getIsBillingAddress());
         
@@ -131,18 +127,15 @@ public class AddressService {
         return AddressResponse.builder()
                 .id(address.getId())
                 .addressLine1(address.getAddressLine1())
+                .user(address.getUser())
                 .addressLine2(address.getAddressLine2())
                 .city(address.getCity())
                 .state(address.getState())
                 .postalCode(address.getPostalCode())
                 .country(address.getCountry())
-                .phoneNumber(address.getPhoneNumber())
-                .fullName(address.getFullName())
                 .isDefault(address.getIsDefault())
                 .isShippingAddress(address.getIsShippingAddress())
                 .isBillingAddress(address.getIsBillingAddress())
-                .createdAt(address.getCreatedAt())
-                .updatedAt(address.getUpdatedAt())
                 .build();
     }
 }

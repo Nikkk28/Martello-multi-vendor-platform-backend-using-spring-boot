@@ -49,8 +49,16 @@ public class AuthService {
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
                 .role(request.getRole())
+                .enabled(true)
                 .addresses(request.getAddress())
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .phoneNumber(request.getPhoneNumber())
                 .build();
+        if (request.getAddress() != null) {
+            request.getAddress().forEach(address -> address.setUser(user));
+            user.setAddresses(request.getAddress());
+        }
 
         User savedUser = userRepository.save(user);
 
@@ -60,6 +68,8 @@ public class AuthService {
                     .businessName(request.getVendorProfile().getBusinessName())
                     .businessDescription(request.getVendorProfile().getBusinessDescription())
                     .contactPhone(request.getVendorProfile().getContactPhone())
+                    .createdAt(LocalDateTime.now())
+                    .updatedAt(LocalDateTime.now())
                     .status(ApprovalStatus.PENDING)
                     .build();
             
@@ -114,6 +124,7 @@ public class AuthService {
 
         User user = refreshToken.getUser();
         String accessToken = jwtService.generateToken(user);
+        System.out.println("Received refresh token: " + request.getRefreshToken());
 
         return AuthResponse.builder()
                 .accessToken(accessToken)
@@ -137,6 +148,7 @@ public class AuthService {
                 .user(user)
                 .token(UUID.randomUUID().toString())
                 .expiryDate(LocalDateTime.now().plusDays(7))
+                .createdAt(LocalDateTime.now())
                 .build();
         
         return refreshTokenRepository.save(refreshToken);

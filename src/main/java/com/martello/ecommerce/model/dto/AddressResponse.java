@@ -1,5 +1,6 @@
 package com.martello.ecommerce.model.dto;
 
+import com.martello.ecommerce.model.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,6 +25,5 @@ public class AddressResponse {
     private Boolean isDefault;
     private Boolean isShippingAddress;
     private Boolean isBillingAddress;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private User user;
 }

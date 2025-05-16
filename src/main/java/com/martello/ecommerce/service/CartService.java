@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,7 +28,7 @@ public class CartService {
     private final ProductRepository productRepository;
     private final ProductVariationRepository productVariationRepository;
 
-    @Transactional(readOnly = true)
+    @Transactional
     public CartResponse getUserCart(User user) {
         Cart cart = getOrCreateCart(user);
         return mapToCartResponse(cart);
@@ -95,6 +96,8 @@ public class CartService {
                     .cart(cart)
                     .product(product)
                     .productVariation(variation)
+                    .createdAt(LocalDateTime.now())
+                    .updatedAt(LocalDateTime.now())
                     .quantity(request.getQuantity())
                     .build();
             cart.getItems().add(cartItem);
@@ -174,6 +177,8 @@ public class CartService {
                     Cart newCart = Cart.builder()
                             .user(user)
                             .items(new ArrayList<>())
+                            .createdAt(LocalDateTime.now())
+                            .updatedAt(LocalDateTime.now())
                             .build();
                     return cartRepository.save(newCart);
                 });
@@ -221,8 +226,6 @@ public class CartService {
                 .vendorGroups(vendorGroups)
                 .totalItems(cart.getItems().size())
                 .total(total)
-                .createdAt(cart.getCreatedAt())
-                .updatedAt(cart.getUpdatedAt())
                 .build();
     }
 

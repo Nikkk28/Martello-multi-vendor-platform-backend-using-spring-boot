@@ -25,7 +25,7 @@ public class Address {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     private User user;
 
     @Column(nullable = false)
@@ -46,24 +46,11 @@ public class Address {
     private String country;
 
     @Column(nullable = false)
-    private String phoneNumber;
-
-    private String fullName;
-
-    @Column(nullable = false)
-    private Boolean isDefault = false;
+    private Boolean isDefault = true;
 
     @Column(nullable = false)
     private Boolean isShippingAddress = true;
 
     @Column(nullable = false)
-    private Boolean isBillingAddress = false;
-
-    @CreatedDate
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime createdAt;
-
-    @LastModifiedDate
-    @Column(nullable = false)
-    private LocalDateTime updatedAt;
+    private Boolean isBillingAddress = true;
 }
