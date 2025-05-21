@@ -103,6 +103,8 @@ public class DiscountService {
                 .usageCount(0)
                 .category(category)
                 .product(product)
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
                 .vendor(vendor)
                 .minimumOrderAmount(request.getMinimumOrderAmount() != null ? 
                         request.getMinimumOrderAmount() : BigDecimal.ZERO)

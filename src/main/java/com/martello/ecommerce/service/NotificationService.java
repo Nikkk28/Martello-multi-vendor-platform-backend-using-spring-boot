@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -25,6 +26,7 @@ public class NotificationService {
                 .title(title)
                 .content(content)
                 .isRead(false)
+                .createdAt(LocalDateTime.now())
                 .build();
         
         notificationRepository.save(notification);

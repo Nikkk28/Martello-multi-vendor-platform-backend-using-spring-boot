@@ -187,6 +187,8 @@ public class CommissionService {
         commissionRate.setCategory(category);
         commissionRate.setRate(request.getRate());
         commissionRate.setDescription(request.getDescription());
+        commissionRate.setCreatedAt(LocalDateTime.now());
+        commissionRate.setUpdatedAt(LocalDateTime.now());
         commissionRate.setIsActive(true);
         
         CommissionRate savedRate = commissionRateRepository.save(commissionRate);
