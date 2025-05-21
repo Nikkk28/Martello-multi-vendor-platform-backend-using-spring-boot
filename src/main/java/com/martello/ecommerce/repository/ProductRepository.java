@@ -21,4 +21,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     
     @Query("SELECT p.category.name, COUNT(p) FROM Product p GROUP BY p.category.name")
     List<Object[]> countProductsByCategory();
+    @Query("SELECT p FROM Product p WHERE p.isListed = true ORDER BY SIZE(p.orderItems) DESC")
+    List<Product> findTopProductsByOrderCount(Pageable pageable);
+    List<Product> findTop5ByCategoryIdAndIdNotAndIsListedTrue(Long categoryId, Long excludeProductId);
+
 }

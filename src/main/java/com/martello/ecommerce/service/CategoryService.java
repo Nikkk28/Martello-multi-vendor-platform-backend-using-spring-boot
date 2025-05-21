@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,6 +45,8 @@ public class CategoryService {
         Category category = Category.builder()
                 .name(request.getName())
                 .description(request.getDescription())
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
                 .build();
         
         Category savedCategory = categoryRepository.save(category);
@@ -63,6 +66,7 @@ public class CategoryService {
         
         category.setName(request.getName());
         category.setDescription(request.getDescription());
+        category.setUpdatedAt(LocalDateTime.now());
         
         Category updatedCategory = categoryRepository.save(category);
         return mapToCategoryResponse(updatedCategory);
@@ -86,7 +90,7 @@ public class CategoryService {
                 .id(category.getId())
                 .name(category.getName())
                 .description(category.getDescription())
-                .productCount(category.getProducts().size())
+                .productCount(category.getProducts()!=null? category.getProducts().size() : 0)
                 .createdAt(category.getCreatedAt())
                 .updatedAt(category.getUpdatedAt())
                 .build();

@@ -14,6 +14,7 @@ import com.martello.ecommerce.repository.ProductRepository;
 import com.martello.ecommerce.repository.VendorProfileRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -135,6 +136,20 @@ public class ProductService {
         
         List<Product> products = productRepository.findByVendorId(vendorProfile.getId());
         return products.stream()
+                .map(this::mapToProductResponse)
+                .collect(Collectors.toList());
+    }
+    public List<ProductResponse> getFeaturedProducts() {
+        // Example: returns top 10 listed products with most orderItems
+        Pageable topTen = PageRequest.of(0, 10);
+        List<Product> topProducts = productRepository.findTopProductsByOrderCount(topTen);
+        return topProducts.stream()
+                .map(this::mapToProductResponse)
+                .collect(Collectors.toList());
+    }
+    public List<ProductResponse> getRelatedProducts(Long productId, Long categoryId) {
+        List<Product> related = productRepository.findTop5ByCategoryIdAndIdNotAndIsListedTrue(categoryId, productId);
+        return related.stream()
                 .map(this::mapToProductResponse)
                 .collect(Collectors.toList());
     }
