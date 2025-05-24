@@ -46,4 +46,6 @@ public class OrderItem {
     @LastModifiedDate
     @Column(nullable = false)
     private LocalDateTime updatedAt;
+
+    private Integer price;
 }

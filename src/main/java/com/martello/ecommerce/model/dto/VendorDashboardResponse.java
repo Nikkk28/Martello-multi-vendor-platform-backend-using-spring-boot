@@ -1,5 +1,6 @@
 package com.martello.ecommerce.model.dto;
 
+import com.martello.ecommerce.model.enums.ApprovalStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,6 +17,8 @@ import java.util.Map;
 public class VendorDashboardResponse {
     private BigDecimal totalEarnings;
     private Integer pendingOrders;
+    private int totalProducts;
     private List<Map<String, Object>> topProducts;
-    private List<BigDecimal> weeklySalesTrend;
+    private List<WeeklySalesTrend> weeklySalesTrend;
+    private ApprovalStatus approvalStatus;
 }

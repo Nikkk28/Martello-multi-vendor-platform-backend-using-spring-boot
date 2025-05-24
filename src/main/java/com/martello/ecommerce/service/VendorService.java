@@ -4,6 +4,7 @@ import com.martello.ecommerce.exception.BadRequestException;
 import com.martello.ecommerce.exception.ResourceNotFoundException;
 import com.martello.ecommerce.model.dto.VendorApprovalRequest;
 import com.martello.ecommerce.model.dto.VendorDashboardResponse;
+import com.martello.ecommerce.model.dto.WeeklySalesTrend;
 import com.martello.ecommerce.model.entity.Order;
 import com.martello.ecommerce.model.entity.Product;
 import com.martello.ecommerce.model.entity.User;
@@ -104,24 +105,37 @@ public class VendorService {
         List<Map<String, Object>> topProductsList = topProducts.stream()
                 .map(product -> {
                     Map<String, Object> map = new HashMap<>();
+                    map.put("id", product.getId());
                     map.put("name", product.getName());
-                    map.put("sales", product.getOrderItems().size());
+                    map.put("price", product.getPrice());
+                    map.put("quantity", product.getStockQuantity());
+                    map.put("totalSales", product.getOrderItems().stream()
+                            .mapToDouble(item -> item.getPrice().doubleValue() * item.getQuantity())
+                            .sum());
+
                     return map;
                 })
                 .collect(Collectors.toList());
-        
-        List<BigDecimal> salesTrend = new ArrayList<>();
+
+        List<WeeklySalesTrend> salesTrend = new ArrayList<>();
         if (weeklySalesTrend != null && !weeklySalesTrend.isEmpty()) {
-            salesTrend = weeklySalesTrend.stream()
-                    .map(row -> (BigDecimal) row[1])
-                    .collect(Collectors.toList());
+            for (Object[] row : weeklySalesTrend) {
+                LocalDateTime date = (LocalDateTime) row[0];
+                BigDecimal amount = (BigDecimal) row[1];
+                salesTrend.add(new WeeklySalesTrend(date.toLocalDate().toString(), amount));
+            }
         }
-        
+
+        int totalProducts = productRepository.countByVendorId(vendorProfile.getId());
+
+
         return VendorDashboardResponse.builder()
                 .totalEarnings(totalEarnings)
                 .pendingOrders(pendingOrders.size())
                 .topProducts(topProductsList)
                 .weeklySalesTrend(salesTrend)
+                .totalProducts(totalProducts)
+                .approvalStatus(vendorProfile.getStatus())
                 .build();
     }
 }
